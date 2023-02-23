@@ -1,0 +1,7 @@
+build/
+dist/
+*.py[co]
+__pycache__/
+
+.idea/
+.vscode/
