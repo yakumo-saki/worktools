@@ -6,7 +6,7 @@ Usage:
 """
 
 from setuptools import setup
-from strings import Strings 
+from src.consts import Strings 
 
 
 APP = ["app.py"]
