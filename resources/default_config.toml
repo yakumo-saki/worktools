@@ -1,0 +1,24 @@
+[hue]
+bridge_ip = ""
+
+[hue.focus]
+rgb = [255, 200 ,0]
+brightness=254
+
+[hue.relax]
+rgb = [0, 0 ,0]
+brightness=0
+
+[hue.zone]
+rgb = [255, 0, 0]
+brightness=254
+
+[hue.meeting]
+rgb = [255, 0, 0]
+brightness=254
+
+[pomodoro]
+focus=25
+relax=5
+break=15
+break_after_pomo=4

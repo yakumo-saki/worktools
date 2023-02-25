@@ -27,13 +27,14 @@ class Pomodoro:
         self.currentState = PomoState.STOP
         self.timerSecond = 0
 
-    """
-    時を進める。毎秒呼ばれることを想定している
-    Returns:
-        残り秒数。ただし -1 は pause 状態ではないことを示す
-        100%の秒数
-    """
     def tick(self) -> typing.Tuple[int, int]:
+        """
+        時を進める。毎秒呼ばれることを想定している
+        Returns:
+            残り秒数。ただし -1 は pause 状態ではないことを示す
+            100%の秒数
+        """
+
         left = self.timer.tick()
         if left == 0:
             self.pomodoroSetsDone = self.pomodoroSetsDone + 1

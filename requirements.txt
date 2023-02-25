@@ -1,2 +1,5 @@
 rumps
 py2app
+phue
+tomlkit
+rgbxy

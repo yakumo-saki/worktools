@@ -1,8 +1,9 @@
 import rumps
 from src.consts import * 
 from src.pomodoro import Pomodoro, PomoType
-from threading import Timer
-
+from src.about import *
+from src.hue import HueBridge
+import os
 class WorkToolsApp(rumps.App):
 
     def __init__(self):
@@ -16,12 +17,18 @@ class WorkToolsApp(rumps.App):
             Strings.MENU_SET_LIGHT_YELLOW,
             None,
             Strings.MENU_PREFERENCES,
+            Strings.MENU_ABOUT,
             None,
         ]
         rumps.debug_mode(False)
-        self.icon = 'resources/circle_gray.png'
+        self.icon = os.path.join(Strings.IMG_DIR, 'circle_gray.png')
         self.timer = rumps.Timer(self.timer_tick, 1)
         self.pomodoro = Pomodoro()
+        self.hue = HueBridge()
+
+    @rumps.clicked(Strings.MENU_ABOUT)
+    def about(self, _):
+        showAboutWindow()
 
     @rumps.clicked(Strings.MENU_PREFERENCES)
     def prefs(self, _):
@@ -51,7 +58,7 @@ class WorkToolsApp(rumps.App):
         elif left > 0:
             pct = "{:0>3}".format(int( (max - left) / max * 100))
             p = pct[1:2]
-            icon = f"resources/circle_{p}.png"
+            icon = os.path.join(Strings.IMG_DIR, f"circle_{p}.png")
             sender.icon = icon
             sender.title = f'{left}'
             return
@@ -65,8 +72,6 @@ class WorkToolsApp(rumps.App):
         elif next == PomoType.RELAX:
             rumps.notification(Strings.APP_TITLE, Strings.NOTIFY_DONE_SUBTITLE, Strings.NOTIFY_NEXT_RELAX)
 
-        sender.icon = 'resources/circle_10.png'
+        sender.icon = os.path.join(Strings.IMG_DIR, 'circle_10.png')
         sender.stop(sender)
-
-if __name__ == "__main__":
-    WorkToolsApp().run()
+        

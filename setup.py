@@ -10,13 +10,14 @@ from src.consts import Strings
 
 
 APP = ["app.py"]
-DATA_FILES = []
+DATA_FILES = ['resources']
 OPTIONS = {
     'argv_emulation': True,
     'plist': {
         'LSUIElement': True,
     },
     'packages': ['rumps'],
+    'iconfile':'./nonfree/app-icon.icns',
 }
 
 setup(

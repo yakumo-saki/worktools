@@ -4,22 +4,23 @@ class TimerState:
     STATE_RUN = 'RUN'
     STATE_STOP = 'STOP'
 
-"""
-Timerクラス。毎秒Tickが呼ばれる事により秒が進むようにしていたが、
-メニューバーを触っている間、rumps.Timerが止まってしまうので時刻を見るようにした。
-"""
 class Timer:
+    """
+    Timerクラス。毎秒Tickが呼ばれる事により秒が進むようにしていたが、
+    メニューバーを触っている間、rumps.Timerが止まってしまうので時刻を見るようにした。
+    """
 
     def __init__(self) -> None:
         self.endUnixtime = 0
         self.state = TimerState.STATE_STOP
 
-    """
-    時を進める。毎秒呼ばれることを想定している
-    Returns:
-        残り秒数。ただし -1 は残り秒数がN/Aな状態（=タイマーが動いていない）
-    """
     def tick(self) -> int:
+        """
+        時を進める。毎秒呼ばれることを想定している
+        Returns:
+            残り秒数。ただし -1 は残り秒数がN/Aな状態（=タイマーが動いていない）
+        """
+
         if self.state != TimerState.STATE_RUN:
             return -1
 
