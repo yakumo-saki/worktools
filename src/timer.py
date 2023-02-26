@@ -1,5 +1,8 @@
 import datetime
 
+from logging import getLogger
+logger = getLogger(__name__)
+
 class TimerState:
     STATE_RUN = 'RUN'
     STATE_STOP = 'STOP'

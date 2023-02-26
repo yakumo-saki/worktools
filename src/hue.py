@@ -5,16 +5,17 @@ import typing
 from phue import Bridge, PhueRegistrationException,Light
 from src.config import get_config_dir
 from src.consts import Strings
-
-
 from rgbxy import Converter
+
+from logging import getLogger
+logger = getLogger(__name__)
 
 rgbxyconv = Converter()
 
 class HueBridge:
 
     def __init__(self) -> None:
-        self._bridge: Bridge = None
+        self._bridge: typing.Optional[Bridge] = None
         self._connected = False
 
     def is_connected(self):
@@ -25,38 +26,48 @@ class HueBridge:
 
         try:
             self._bridge = Bridge(ip=bridge_ip, config_file_path=bridge_config_path) # Enter bridge IP here.
-            self._bridge.connect()
             self._connected = True
             return True
         except PhueRegistrationException:
             self._connected = False
+            logger.info("Connect to hue bridge failed. press bridge button and try again")
             return False
         
-    def get_lights(self) -> typing.Dict[int, Light]:
+    def get_lights(self) -> typing.Dict[str, Light]:
         if self.is_connected == False:
-            return []
+            return {}
         
         lights = self._bridge.get_light_objects('id')
+        if lights == None:
+            return {}
+            
         return lights
 
-    def get_light_by_id(self, light_id:int) -> Light:
+    def get_light_by_id(self, light_id:int) -> typing.Optional[Light]:
         """
         ライトを取得する。ついでにreachableかどうかもチェックする。
         条件に合わない場合は、Noneが帰る
         """
         if self.is_connected() == False:
+            logger.info(f"cant get light_id {light_id}: not connected")
             return None
 
-        light: Light = self._bridge.get_light(light_id)
+        lights: dict = self.get_lights()
+        if light_id not in lights:
+            logger.info(f"not found")
+            return None
+
+        light: Light = lights[light_id]
         if light == None:
             return None
         
         if light.reachable == False:
+            logger.info(f"cant get light_id {light_id}: found but not reachable")
             return None
         
         return light
 
-    def lights_on(self, light_id: int, rgb: typing.List[int, int, int], brightness: int) -> bool:
+    def light_on(self, light_id: int, rgb: typing.List[int], brightness: int) -> bool:
         """
         ライトをONにする
         args:
@@ -68,15 +79,18 @@ class HueBridge:
         if light == None:
             return False
 
+        if brightness > 254:
+            raise ValueError("brightness {brightness} is invalid, must be 0-254")
+
         # RGB colors to XY  
-        xy = rgbxyconv.rgbtoxy(**rgb)
+        xy = rgbxyconv.rgb_to_xy(*rgb)
 
         light.xy = xy
         light.brightness = brightness
         light.on = True
         return True
 
-    def lights_off(self, light_id: int) -> bool:
+    def light_off(self, light_id: int) -> bool:
         light = self.get_light_by_id(light_id)
         if light == None:
             return False

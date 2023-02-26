@@ -5,6 +5,34 @@ My work support tool for macOS.
 * Pomodoro Timer
 * Philips hue integration
 
+## Install
+
+* Download from release section
+* Extract and copy *.app to Applications
+
+## How to use
+
+Timers are usable out of the box.
+You want to use Philips Hue integration. follow these steps.
+
+1. Start Work Tools.app to create default config
+2. Open your ~/Library/Application Support/WorkTools/config.toml
+3. Edit it. (at least bridge_ip must be filled.)
+4. (re) Start app
+5. Push your phillips hue bridge's center button
+6. Click `Menubar icon -> Connect to hue bridge` within 30sec.
+
+
+## config
+
+config file is TOML format. Default location is ~/Library/Application Support/WorkTools/config.toml
+If you define environment value XDG_CONFIG_HOME, config file is $XDG_CONFIG_HOME/WorkTools/config.toml
+
+### hue
+
+* `bridge_ip` Philips hue bridge IP address.
+* `default_light_id` Which light you want to use. get id by `Utility -> Show lights`
+
 ## Develop
 
 ```

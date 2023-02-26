@@ -4,6 +4,10 @@ from src.pomodoro import Pomodoro, PomoType
 from src.about import *
 from src.hue import HueBridge
 import os
+
+from logging import getLogger
+logger = getLogger(__name__)
+
 class WorkToolsApp(rumps.App):
 
     def __init__(self):
@@ -11,12 +15,19 @@ class WorkToolsApp(rumps.App):
         self.menu = [
             Strings.MENU_START_POMO,
             Strings.MENU_STOP_POMO,
+            None,
+            Strings.MENU_START_ZONE,
+            Strings.MENU_STOP_ZONE,
+            None,
             Strings.MENU_POMO_AUTO_LIGHT,
             None,
-            Strings.MENU_SET_LIGHT_RED,
-            Strings.MENU_SET_LIGHT_YELLOW,
+            Strings.MENU_HUE_CONNECT,
+            Strings.MENU_HUE_MEETING,
+            Strings.MENU_HUE_FOCUS,
+            Strings.MENU_HUE_ZONE,
             None,
             Strings.MENU_PREFERENCES,
+            (Strings.MENU_UTIL, [rumps.MenuItem(Strings.MENU_LIST_LIGHTS, callback=self.show_lights)]),
             Strings.MENU_ABOUT,
             None,
         ]
@@ -49,6 +60,23 @@ class WorkToolsApp(rumps.App):
     @rumps.clicked(Strings.MENU_POMO_AUTO_LIGHT)
     def auto_color_change(self, sender):
         sender.state = not sender.state
+
+    @rumps.clicked(Strings.MENU_POMO_AUTO_LIGHT)
+    def auto_color_change(self, sender):
+        sender.state = not sender.state
+
+    @rumps.clicked(Strings.MENU_HUE_CONNECT)
+    def hue_connect(self, sender):
+        ret = self.hue.connect("10.1.0.195")
+        sender.state = ret
+
+    @rumps.clicked(Strings.MENU_HUE_MEETING)
+    def hue_meeting(self, sender):
+        self.hue.light_on(7, [255, 0, 0], 254)
+
+    @rumps.clicked(Strings.MENU_LIST_LIGHTS) # サブメニューはこの形式でイベントハンドラを追加できない
+    def show_lights(self, sender):
+        rumps.alert("not impl")
 
     def timer_tick(sender, self):
         left, max = sender.pomodoro.tick()

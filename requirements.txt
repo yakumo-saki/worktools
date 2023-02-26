@@ -1,5 +1,6 @@
 rumps
 py2app
 phue
-tomlkit
 rgbxy
+tomli
+tomli-w

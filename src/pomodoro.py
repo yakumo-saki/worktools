@@ -2,6 +2,9 @@ from src.timer import Timer
 from pprint import pprint
 import typing
 
+from logging import getLogger
+logger = getLogger(__name__)
+
 class PomoState:
     RUN = 'RUN'
     PAUSE = 'PAUSE'

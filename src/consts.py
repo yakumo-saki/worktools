@@ -8,10 +8,18 @@ class Strings:
     MENU_START_POMO = "Start pomo"
     MENU_STOP_POMO = "Stop pomo"
     MENU_SKIP_RELAX = "Skip Relax"
+    
+    MENU_START_ZONE = "Enter zone"
+    MENU_STOP_ZONE = "Exit zone"
+
     MENU_POMO_AUTO_LIGHT = "Set Light color on focus"
-    MENU_SET_LIGHT_RED = "Set Light Red"
-    MENU_SET_LIGHT_YELLOW = "Set Light Yellow"
+    MENU_HUE_CONNECT = "Connect to hue bridge"
+    MENU_HUE_FOCUS = "Set hue Focus"
+    MENU_HUE_ZONE = "Set hue Zone"
+    MENU_HUE_MEETING = "Set hue Meeting"
     MENU_PREFERENCES = "Preferences"
+    MENU_UTIL = "Utility"
+    MENU_LIST_LIGHTS = "Show lights"
     MENU_ABOUT = "About"
 
     NOTIFY_DONE_SUBTITLE = '完了！'
