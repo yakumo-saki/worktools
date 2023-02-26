@@ -48,7 +48,7 @@ class Strings:
     MENU_ABOUT = "About"
 
     NOTIFY_DONE_SUBTITLE = '完了！'
-    NOTIFY_NEXT_RELAX = '少しリラックスしましょう！'
+    NOTIFY_NEXT_RELAX = '時間です。少しリラックスしましょう！'
     NOTIFY_NEXT_FOCUS = '休憩完了！集中していきましょう！'
-    NOTIFY_NEXT_BREAK = '一息つきましょう'
+    NOTIFY_NEXT_BREAK = 'かなり集中しました。一息つきましょう。'
 
