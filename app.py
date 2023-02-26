@@ -3,13 +3,10 @@ from src.config import Config
 import logging
 
 config: Config = None
-logger = logging.getLogger(__name__)
+logger:logging.Logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
-
-    # at first read config
-    config = Config()
-    config.load_config()
-
+    logging.basicConfig(format='{asctime} [{levelname:.5}] {name}: {message}', style='{',encoding='utf-8', level=logging.DEBUG, force=True)
+    
+    logger.info(f"{Strings.APP_TITLE} start.")
     WorkToolsApp().run()

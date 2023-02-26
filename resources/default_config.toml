@@ -1,6 +1,6 @@
 [hue]
-bridge_ip = ""
-default_light_id = "1"
+bridge_ip = "192.168.10.200"
+default_light_id = 1
 
 [hue.focus]
 rgb = [255, 200 ,0]
@@ -8,6 +8,11 @@ brightness=254
 saturation=254
 
 [hue.relax]
+rgb = [0, 0 ,0]
+brightness=0
+saturation=254
+
+[hue.break]
 rgb = [0, 0 ,0]
 brightness=0
 saturation=254

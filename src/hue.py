@@ -54,7 +54,7 @@ class HueBridge:
 
         lights: dict = self.get_lights()
         if light_id not in lights:
-            logger.info(f"not found")
+            logger.info(f"specified id {light_id} not found")
             return None
 
         light: Light = lights[light_id]
@@ -67,13 +67,15 @@ class HueBridge:
         
         return light
 
-    def light_on(self, light_id: int, rgb: typing.List[int], brightness: int) -> bool:
+    def light_on(self, light_id: int, rgb: typing.List[int], brightness: int, saturation: int) -> bool:
         """
         ライトをONにする
-        args:
-            light_id get_lights で得られるID
+
+        Args:
+            light_id : get_lights で得られるID
             rgb: 色
-            brightness 0-254
+            brightness: 0-254
+            saturation: 0-254
         """
         light = self.get_light_by_id(light_id)
         if light == None:
@@ -87,6 +89,7 @@ class HueBridge:
 
         light.xy = xy
         light.brightness = brightness
+        light.saturation = saturation
         light.on = True
         return True
 
@@ -97,4 +100,9 @@ class HueBridge:
 
         light.on = False
         return True
+
+    def all_lights_off(self) -> None:
+        lights = self.get_lights()
+        for id in lights.keys():
+            self.light_off(id)
 
