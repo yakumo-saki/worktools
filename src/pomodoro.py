@@ -17,7 +17,6 @@ class PomoType():
     BREAK = 'BREAK'  # 4セット実施後は長い休憩
     NONE = 'NONE'    # 一度も開始していない初期状態
 
-
 class Pomodoro:
 
     def __init__(self, dict: typing.Dict[str, int]) -> None:

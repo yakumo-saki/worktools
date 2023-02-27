@@ -132,6 +132,15 @@ class WorkToolsApp(rumps.App):
         self.pomodoro.stop()
         self.timer.stop()
 
+    @rumps.clicked(Strings.MENU_START_ZONE)
+    def start_zone(self, sender):
+        self._hue_on(HueEventType.ZONE)
+
+    @rumps.clicked(Strings.MENU_STOP_ZONE)
+    def stop_zone(self, sender):
+        self._hue_off(HueEventType.ZONE)
+
+
     @rumps.clicked(Strings.MENU_HUE_AUTO_LIGHT)
     def auto_color_change(self, sender):
         sender.state = not sender.state
@@ -153,7 +162,6 @@ class WorkToolsApp(rumps.App):
     @rumps.clicked(Strings.MENU_HUE_ZONE)
     def hue_zone(self, sender):
         self._hue_on(HueEventType.ZONE)
-
 
     @rumps.clicked(Strings.MENU_HUE_OFF)
     def hue_off(self, sender):
