@@ -1,6 +1,7 @@
 from src.timer import Timer
 from pprint import pprint
 import typing
+from src.config import PomoConfigKey
 
 from logging import getLogger
 logger = getLogger(__name__)
@@ -15,20 +16,21 @@ class PomoType():
     RELAX = 'RELAX'
     BREAK = 'BREAK'  # 4セット実施後は長い休憩
     NONE = 'NONE'    # 一度も開始していない初期状態
-    
-    MINUTE = 1
-    FOCUS_SEC = 25 * MINUTE
-    RELAX_SEC = 5 * MINUTE
-    BREAK_SEC = 15 * MINUTE
+
 
 class Pomodoro:
 
-    def __init__(self) -> None:
+    def __init__(self, dict: typing.Dict[str, int]) -> None:
         self.pomodoroSetsDone = 0
         self.timer = Timer()
         self.currentType = PomoType.NONE
         self.currentState = PomoState.STOP
         self.timerSecond = 0
+
+        self._focus_sec = dict[PomoConfigKey.FOCUS]
+        self._relax_sec = dict[PomoConfigKey.RELAX]
+        self._break_sec = dict[PomoConfigKey.BREAK]
+        self._break_after = dict[PomoConfigKey.BREAK_AFTER]
 
     def tick(self) -> typing.Tuple[int, int]:
         """
@@ -58,11 +60,11 @@ class Pomodoro:
 
     def start(self, pomodoroType):
         if pomodoroType == PomoType.FOCUS:
-            self.timerSecond = PomoType.FOCUS_SEC
+            self.timerSecond = self._focus_sec
         elif pomodoroType == PomoType.BREAK:
-            self.timerSecond = PomoType.BREAK_SEC
+            self.timerSecond = self._break_sec
         elif pomodoroType == PomoType.RELAX:
-            self.timerSecond = PomoType.RELAX_SEC
+            self.timerSecond = self._relax_sec
         else:
             raise NotImplementedError(f"unknown pomoType {pomodoroType}")
         
