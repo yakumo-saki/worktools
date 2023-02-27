@@ -106,6 +106,7 @@ class WorkToolsApp(rumps.App):
                 ],
             ),
             None,
+            Strings.MENU_QUIT
         ]
 
     @rumps.clicked(Strings.MENU_START_POMO)
@@ -119,6 +120,11 @@ class WorkToolsApp(rumps.App):
 
     @rumps.clicked(Strings.MENU_STOP_POMO)
     def stop(self, _):
+        self.stop_impl
+
+    def stop_impl(self):
+        """Stop , Quitする時にも呼ばれる"""
+
         if config.auto_color_change:
             self._hue_off(HueEventType.from_pomoType(self.pomodoro.currentType))
 
@@ -148,32 +154,27 @@ class WorkToolsApp(rumps.App):
     def hue_zone(self, sender):
         self._hue_on(HueEventType.ZONE)
 
-    def _hue_on(self, type: str):
-        """lightをONにする。
-
-        Args:
-            type (str): HueEventType
-        """
-
-        cfg = config.get_light_config(type)
-        if cfg.get_brightness() == 0:
-            self.hue.light_off(cfg.get_light_id())
-        else:
-            self.hue.light_on(
-                cfg.get_light_id(),
-                cfg.get_rgb(),
-                cfg.get_brightness(),
-                cfg.get_saturation(),
-            )
-
-    def _hue_off(self, type: str):
-        cfg = config.get_light_config(type)
-        self.hue.light_off(cfg.get_light_id())
 
     @rumps.clicked(Strings.MENU_HUE_OFF)
     def hue_off(self, sender):
         """すべてのlightをoffにする"""
-        self.hue.all_lights_off()
+        light_ids = set()
+        for ev in HueEventType.EVENTS:
+            lightcfg = config.get_light_config(ev)
+            light_ids.add(lightcfg.light_id)
+
+        for id in light_ids:
+            if id == None:
+                continue
+            self.hue.light_off(id)
+
+    @rumps.clicked(Strings.MENU_QUIT)
+    def quit_app(self, sender):
+        logger.info(f"{Strings.APP_TITLE} exiting...")
+        self.stop_impl()
+
+        rumps.quit_application()
+
 
     # サブメニューのハンドラ
     def show_lights(self, sender):
@@ -234,3 +235,25 @@ class WorkToolsApp(rumps.App):
 
         sender.icon = os.path.join(Strings.IMG_DIR, "circle_10.png")
         sender.stop(sender)
+
+    def _hue_on(self, type: str):
+        """lightをONにする。
+
+        Args:
+            type (str): HueEventType
+        """
+
+        cfg = config.get_light_config(type)
+        if cfg.brightness == 0:
+            self.hue.light_off(cfg.light_id)
+        else:
+            self.hue.light_on(
+                cfg.light_id,
+                cfg.rgb,
+                cfg.brightness,
+                cfg.saturation,
+            )
+
+    def _hue_off(self, type: str):
+        cfg = config.get_light_config(type)
+        self.hue.light_off(cfg.light_id)

@@ -9,8 +9,10 @@ class HueEventType:
     BREAK = "break"
     ZONE = "zone"
     MEETING = "meeting"
-
+    
     IDLE='IDLE'   # this is not related to config.toml
+
+    EVENTS=[FOCUS, RELAX, BREAK, ZONE, MEETING]
 
     @classmethod
     def from_pomoType(cls, pomoType:str) -> str:
@@ -54,6 +56,7 @@ class Strings:
     MENU_PREFERENCES = "Preferences"
     MENU_LIST_LIGHTS = "Show lights"
     MENU_ABOUT = "About"
+    MENU_QUIT = f"Quit {APP_TITLE}"
 
     NOTIFY_DONE_SUBTITLE = '完了！'
     NOTIFY_NEXT_RELAX = '時間です。少しリラックスしましょう！'

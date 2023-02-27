@@ -28,16 +28,20 @@ class LightConfig:
         self._brightness = self._brightness if self._brightness != None else 254
         self._saturation = self._saturation if self._saturation != None else 254
 
-    def get_rgb(self) -> List[int]:
+    @property
+    def rgb(self) -> List[int]:
         return self._rgb
 
-    def get_brightness(self) -> int:
+    @property
+    def brightness(self) -> int:
         return self._brightness
 
-    def get_saturation(self) -> int:
+    @property
+    def saturation(self) -> int:
         return self._saturation
 
-    def get_light_id(self) -> int:
+    @property
+    def light_id(self) -> int:
         return self._light_id
 
 
