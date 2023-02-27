@@ -1,10 +1,16 @@
 class HueEventType:
     """config hue.*"""
+
+    # used for
+    # app hue light status
+    # config.toml hue light section names
     FOCUS = "focus" # Start Pomodoro
     RELAX = "relax"
     BREAK = "break"
     ZONE = "zone"
     MEETING = "meeting"
+
+    IDLE='IDLE'   # this is not related to config.toml
 
     @classmethod
     def from_pomoType(cls, pomoType:str) -> str:
@@ -37,6 +43,8 @@ class Strings:
     MENU_HUE = "Philips Hue"
     MENU_HUE_AUTO_LIGHT = "Set Light color on Pomo/Zone"
     MENU_HUE_CONNECT = "Connect to hue bridge"
+
+    MENU_HUE_OVERRIDE = "Hue Override"
     MENU_HUE_FOCUS = "Set Focus"
     MENU_HUE_ZONE = "Set Zone"
     MENU_HUE_MEETING = "Set Meeting"

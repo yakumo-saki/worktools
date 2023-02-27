@@ -25,6 +25,7 @@ class WorkToolsApp(rumps.App):
         self.timer = rumps.Timer(self.timer_tick, 1)
         self.pomodoro = Pomodoro()
         self.hue = HueBridge()
+        self.hue_state = HueEventType.IDLE
         self.startup()
 
         # メニュー構築
@@ -46,6 +47,8 @@ class WorkToolsApp(rumps.App):
             Strings.MENU_HUE,
             menu_connected,
             menu_auto_light,
+            None,
+            Strings.MENU_HUE_OVERRIDE,
             Strings.MENU_HUE_MEETING,
             Strings.MENU_HUE_FOCUS,
             Strings.MENU_HUE_ZONE,
@@ -97,9 +100,23 @@ class WorkToolsApp(rumps.App):
 
     @rumps.clicked(Strings.MENU_HUE_MEETING)
     def hue_meeting(self, sender):
-        self._hue_on('meeting')
+        self._hue_on(HueEventType.MEETING)
+
+    @rumps.clicked(Strings.MENU_HUE_FOCUS)
+    def hue_focus(self, sender):
+        self._hue_on(HueEventType.FOCUS)
+
+    @rumps.clicked(Strings.MENU_HUE_ZONE)
+    def hue_zone(self, sender):
+        self._hue_on(HueEventType.ZONE)
 
     def _hue_on(self, type:str):
+        """lightをONにする。
+
+        Args:
+            type (str): HueEventType
+        """
+
         cfg = config.get_light_config(type)
         if cfg.get_brightness() == 0:
             self.hue.light_off(cfg.get_light_id())
@@ -118,7 +135,16 @@ class WorkToolsApp(rumps.App):
     # サブメニューのハンドラ
     def show_lights(self, sender):
         """登録されているlightの一覧"""
-        rumps.alert("not impl")
+        lights = self.hue.get_lights()
+        if len(lights) == 0:
+            rumps.alert("no lights found or not connected to hue bridge.")
+
+        msg = "Found lights:"
+        for k in lights:
+            msg = f"{msg}\nID: {k} name:{lights[k].name}"
+        
+        rumps.alert(msg)
+            
 
     def show_prefs(self, _):
         """設定画面（多分rumpsだと作れなそう）"""

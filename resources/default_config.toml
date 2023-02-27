@@ -3,14 +3,22 @@ bridge_ip = "192.168.10.200"
 default_light_id = 1
 
 [hue.focus]
-rgb = [255, 200 ,0]
-brightness=254
-saturation=254
+rgb = [
+    255,
+    240,
+    0
+]
+brightness = 150
+saturation = 200
 
 [hue.relax]
-rgb = [0, 0 ,0]
-brightness=0
-saturation=254
+rgb = [
+    0,
+    0,
+    0,
+]
+brightness = 0
+saturation = 254
 
 [hue.break]
 rgb = [0, 0 ,0]
@@ -18,14 +26,22 @@ brightness=0
 saturation=254
 
 [hue.zone]
-rgb = [255, 0, 0]
-brightness=254
-saturation=254
+rgb = [
+    255,
+    0,
+    255,
+]
+brightness = 254
+saturation = 254
 
 [hue.meeting]
-rgb = [255, 0, 255]
-brightness=254
-saturation=254
+rgb = [
+    255,
+    0,
+    0,
+]
+brightness = 254
+saturation = 254
 
 [pomodoro]
 focus=25

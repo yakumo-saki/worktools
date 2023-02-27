@@ -33,7 +33,7 @@ class HueBridge:
             logger.info("Connect to hue bridge failed. press bridge button and try again")
             return False
         
-    def get_lights(self) -> typing.Dict[str, Light]:
+    def get_lights(self) -> typing.Dict[int, Light]:
         if self.is_connected == False:
             return {}
         
@@ -83,6 +83,13 @@ class HueBridge:
 
         if brightness > 254:
             raise ValueError("brightness {brightness} is invalid, must be 0-254")
+        elif brightness == 0:
+            logger.info('light_on called with brightness=0. Should call light_off.')
+            self.light_off(light_id)
+            return True
+
+        if saturation > 254:
+            raise ValueError("saturation {saturation} is invalid, must be 0-254")
 
         # RGB colors to XY  
         xy = rgbxyconv.rgb_to_xy(*rgb)
