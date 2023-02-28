@@ -21,6 +21,7 @@ class WorkToolsApp(rumps.App):
     def __init__(self):
         super(WorkToolsApp, self).__init__(name=type(self).__name__, quit_button=None)
 
+        self.debug = False
         self._parse_args()
 
         self.icon = os.path.join(Strings.IMG_DIR, "circle_gray.png")
@@ -29,7 +30,6 @@ class WorkToolsApp(rumps.App):
         self.hue = HueBridge()
         self.hue_state = HueEventType.IDLE
         self._init_pomodoro()
-        self.debug = False
 
         self._startup()
         self._build_menu()
@@ -126,7 +126,9 @@ class WorkToolsApp(rumps.App):
         """Stop , Quitする時にも呼ばれる"""
 
         if config.auto_color_change:
-            self._hue_off(HueEventType.from_pomoType(self.pomodoro.currentType))
+            type = HueEventType.from_pomoType(self.pomodoro.currentType)
+            if type is not None:
+                self._hue_off()
 
         self.title = ""
         self.pomodoro.stop()

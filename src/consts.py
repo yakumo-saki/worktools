@@ -1,3 +1,5 @@
+from typing import Optional
+
 class HueEventType:
     """config hue.*"""
 
@@ -15,7 +17,7 @@ class HueEventType:
     EVENTS=[FOCUS, RELAX, BREAK, ZONE, MEETING]
 
     @classmethod
-    def from_pomoType(cls, pomoType:str) -> str:
+    def from_pomoType(cls, pomoType:str) -> Optional[str]:
         from src.pomodoro import PomoType
         if pomoType == PomoType.FOCUS:
             return HueEventType.FOCUS
@@ -24,7 +26,7 @@ class HueEventType:
         elif pomoType == PomoType.RELAX:
             return HueEventType.RELAX
         
-        raise ValueError(f"unknown {pomoType}")
+        return None
 
 class Strings:
     APP_TITLE = "Work Tools"
