@@ -6,7 +6,7 @@ from src.hue import HueBridge
 from src.config import Config, PomoConfigKey
 from typing import Optional
 import os
-from src.util import *
+from src.util import format_second_pomo, is_blank
 
 from logging import getLogger
 
@@ -120,7 +120,7 @@ class WorkToolsApp(rumps.App):
 
     @rumps.clicked(Strings.MENU_STOP_POMO)
     def stop(self, _):
-        self.stop_impl
+        self.stop_impl()
 
     def stop_impl(self):
         """Stop , Quitする時にも呼ばれる"""
@@ -128,7 +128,7 @@ class WorkToolsApp(rumps.App):
         if config.auto_color_change:
             type = HueEventType.from_pomoType(self.pomodoro.currentType)
             if type != None:
-                self._hue_off()
+                self._hue_off(type)
 
         self.title = ""
         self.pomodoro.stop()
@@ -219,7 +219,7 @@ class WorkToolsApp(rumps.App):
             p = pct[1:2]
             icon = os.path.join(Strings.IMG_DIR, f"circle_{p}.png")
             sender.icon = icon
-            sender.title = f"{left}"
+            sender.title = format_second_pomo(left)
             return
 
         # 完了した時の通知

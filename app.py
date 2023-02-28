@@ -1,8 +1,8 @@
-from src.main import *
+from src.main import config, WorkToolsApp
 from src.config import Config
+from src.consts import Strings
 import logging
 
-config: Config = None
 logger: logging.Logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
@@ -17,4 +17,8 @@ if __name__ == "__main__":
     )
 
     logger.info(f"{Strings.APP_TITLE} start.")
+
+    config = Config()
+    config.load_config()
+
     WorkToolsApp().run()

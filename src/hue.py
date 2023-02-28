@@ -94,10 +94,10 @@ class HueBridge:
         # RGB colors to XY  
         xy = rgbxyconv.rgb_to_xy(*rgb)
 
+        light.on = True
         light.xy = xy
         light.brightness = brightness
         light.saturation = saturation
-        light.on = True
         return True
 
     def light_off(self, light_id: int) -> bool:

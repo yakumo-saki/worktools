@@ -69,7 +69,6 @@ class Config:
     def __init__(self) -> None:
         cfgpath = os.path.join(get_config_dir(), Strings.CFG_FILE)
         self._cfgpath = cfgpath
-        logging.info(f"config file path = {self._cfgpath}")
 
     def load_config(self):
         """
@@ -79,6 +78,7 @@ class Config:
         if os.path.isfile(self._cfgpath) == False:
             self._create_default_config(self._cfgpath)
 
+        logging.info(f"config file path = {self._cfgpath}")
         self._config = self._load_config_file(self._cfgpath)
 
     def _load_config_file(self, cfgpath: str) -> dict:
