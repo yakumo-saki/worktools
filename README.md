@@ -5,6 +5,13 @@ My work support tool for macOS.
 * Pomodoro Timer
 * Philips hue integration
 
+## Current state
+
+* no longer development
+* [rumps](https://github.com/jaredks/rumps) is very useful, ultra easy to build this app.
+* but rumps cant create GUI like TickTick
+* I decide rebuild this app with flutter
+
 ## Install
 
 * Download from release section
