@@ -47,22 +47,29 @@ class LightConfig:
 
 def get_config_dir():
     """
-    configファイルを置くディレクトリを取得します
+    configファイルを置くディレクトリを取得します。優先順位は以下の通り
+    1. XDG_CONFIG_HOME
+    2. ~/.config/worktools if exist  (because cant set XDG_CONFIG_HOME when launch from GUI)
+    3. Application Support
     return:
         path ~/Library/Application Support/worktools or ENV[XDG_CONFIG_HOME]/worktools
     """
     cfgdir = os.environ.get("XDG_CONFIG_HOME")
-    if cfgdir == None:
-        return os.path.expanduser("~/Library/Application Support")
+    if cfgdir != None:
+        return os.path.join(cfgdir, Strings.CFG_DIR)
+    
+    dotconfig = os.path.expanduser(f"~/.config/{Strings.CFG_DIR}")
+    if os.path.isdir(dotconfig):
+        return dotconfig
 
-    return os.path.join(cfgdir, Strings.CFG_DIR)
+    return os.path.expanduser("~/Library/Application Support/{Strings.CFG_DIR}")
 
 
 class Config:
     def __init__(self) -> None:
         cfgpath = os.path.join(get_config_dir(), Strings.CFG_FILE)
         self._cfgpath = cfgpath
-        logging.debug(f"config file path = {self._cfgpath}")
+        logging.info(f"config file path = {self._cfgpath}")
 
     def load_config(self):
         """

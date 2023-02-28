@@ -8,6 +8,12 @@ Usage:
 from setuptools import setup
 from src.consts import Strings 
 
+pkgs = []
+with open('requirements.txt', 'r') as f:
+    for line in f:
+        pkg = line.strip().replace('-', '_')
+        pkgs.append(pkg)
+print(pkgs)
 
 APP = ["app.py"]
 DATA_FILES = ['resources']
@@ -16,7 +22,7 @@ OPTIONS = {
     'plist': {
         'LSUIElement': True,
     },
-    'packages': ['rumps'],
+    'packages': pkgs,
     'iconfile':'./nonfree/app-icon.icns',
 }
 

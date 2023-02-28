@@ -127,7 +127,7 @@ class WorkToolsApp(rumps.App):
 
         if config.auto_color_change:
             type = HueEventType.from_pomoType(self.pomodoro.currentType)
-            if type is not None:
+            if type != None:
                 self._hue_off()
 
         self.title = ""
