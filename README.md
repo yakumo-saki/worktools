@@ -32,7 +32,8 @@ You want to use Philips Hue integration. follow these steps.
 
 ## config
 
-config file is TOML format. Default location is ~/Library/Application Support/WorkTools/config.toml
+config file is TOML format.  
+Default location is ~/Library/Application Support/WorkTools/config.toml  
 If you define environment value XDG_CONFIG_HOME, config file is $XDG_CONFIG_HOME/WorkTools/config.toml
 
 ### hue
